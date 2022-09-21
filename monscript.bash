@@ -34,8 +34,10 @@ echo -e "$(lspci)\n"
         if [ -z "$1" ]; then
                 echo -e "Que voulez-vous faire ?"
                 echo -e "1:informations systeme\t2:processus en cours\t3:"
-                read clavier
-        fi
+                trap 'echo -e "\tOn ne quitte pas mon programme comme ca"' 2 3
+		read clavier
+        
+fi
 
 #informations systeme
         if [ "$clavier" == "1" ] || [ "$1" == "1" ]; then
@@ -46,8 +48,9 @@ echo -e "$(lspci)\n"
 		ps -aux > ps.txt
 		awk '{print $11}' ps.txt | sed 's/\[//g' | sed 's/\]//g' | sed -e 's/\<COMMAND\>//g' | sort | more
 	fi
+
 #GET ipinfo API
-        if [ "$clavier" == "6" ] || [ "$1" == "6" ]; then
+        if [ "$clavier" == "4" ] || [ "$1" == "4" ]; then
                 echo -e "Entrez une ip publique\n"
                 read ip
                 curl -X GET "https://ipinfo.io/$ip"
