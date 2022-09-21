@@ -41,13 +41,9 @@ fi
 
 #informations systeme
         if [ "$clavier" == "1" ] || [ "$1" == "1" ]; then
-		systemfunc | tee sysinfo.txt | more
-		if [ $? ! 0 ]; then
-			echo -e "commande reussie"
-		else
-			echo -e "erreur"
-		fi
+		systemfunc | tee /root/sysinfo.txt | more
 	fi
+
 #afficher les processus et les trier
 	if [ "$clavier" == "2" ] || [ "$1" == "2" ]; then
 		ps -aux > ps.txt
@@ -61,8 +57,14 @@ fi
 			read tableau[i]
 		done
 		for str in ${tableau[@]}; do
-  			curl -X GET "https://api.dictionaryapi.dev/api/v2/entries/en/$str" | jq -r '.[].meanings[].definitions[].definition' 
+  			curl -X GET "https://api.dictionaryapi.dev/api/v2/entries/en/$str" | jq -r '.[].meanings[].definitions[].definition'
 		done
+
+                if [ "$?" = "0" ]; then
+                        echo -e "\n\tCommande reussie"
+                else
+                        echo -e "\n\tErreur detectee"
+                fi
 	fi
 #GET ipinfo API
         if [ "$clavier" == "4" ] || [ "$1" == "4" ]; then
