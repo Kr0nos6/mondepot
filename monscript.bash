@@ -33,7 +33,7 @@ echo -e "$(lspci)\n"
 #menu, skip si argument
         if [ -z "$1" ]; then
                 echo -e "Que voulez-vous faire ?"
-                echo -e "1:informations systeme\t2:processus en cours\t3:"
+                echo -e "1:informations systeme\t2:processus en cours\n3:dictionnaire anglais\t4:ipinfo API"
                 trap 'echo -e "\tOn ne quitte pas mon programme comme ca"' 2 3
 		read clavier
         
@@ -42,6 +42,11 @@ fi
 #informations systeme
         if [ "$clavier" == "1" ] || [ "$1" == "1" ]; then
 		systemfunc | tee sysinfo.txt | more
+		if [ $? ! 0 ]; then
+			echo -e "commande reussie"
+		else
+			echo -e "erreur"
+		fi
 	fi
 #afficher les processus et les trier
 	if [ "$clavier" == "2" ] || [ "$1" == "2" ]; then
@@ -49,6 +54,16 @@ fi
 		awk '{print $11}' ps.txt | sed 's/\[//g' | sed 's/\]//g' | sed -e 's/\<COMMAND\>//g' | sort | more
 	fi
 
+#remplir une tableau avec une boucle et la traiter
+	if [ "$clavier" == "3" ] || [ "$1" == "3" ]; then
+		echo -e "Entrez 3 mots anglais que vous ne connaissez pas"
+		for i in {0..2}; do
+			read tableau[i]
+		done
+		for str in ${tableau[@]}; do
+  			curl -X GET "https://api.dictionaryapi.dev/api/v2/entries/en/$str" | jq -r '.[].meanings[].definitions[].definition' 
+		done
+	fi
 #GET ipinfo API
         if [ "$clavier" == "4" ] || [ "$1" == "4" ]; then
                 echo -e "Entrez une ip publique\n"
