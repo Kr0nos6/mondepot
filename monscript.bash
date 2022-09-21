@@ -50,7 +50,7 @@ fi
 		awk '{print $11}' ps.txt | sed 's/\[//g' | sed 's/\]//g' | sed -e 's/\<COMMAND\>//g' | sort | more
 	fi
 
-#remplir une tableau avec une boucle et la traiter
+#remplir un tableau et traiter chaque element
 	if [ "$clavier" == "3" ] || [ "$1" == "3" ]; then
 		echo -e "Entrez 3 mots anglais que vous ne connaissez pas"
 		for i in {0..2}; do
@@ -60,12 +60,14 @@ fi
   			curl -X GET "https://api.dictionaryapi.dev/api/v2/entries/en/$str" | jq -r '.[].meanings[].definitions[].definition'
 		done
 
+#verifier la derniere commande
                 if [ "$?" = "0" ]; then
                         echo -e "\n\tCommande reussie"
                 else
                         echo -e "\n\tErreur detectee"
                 fi
 	fi
+
 #GET ipinfo API
         if [ "$clavier" == "4" ] || [ "$1" == "4" ]; then
                 echo -e "Entrez une ip publique\n"
