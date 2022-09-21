@@ -17,16 +17,34 @@ echo -e "\t|  _  ||  _| | | | |    /|  __/  |  __||    /|  __|              "
 echo -e "\t| | | || |   \ \_/ / |\ \| |     | |___| |\ \| |___              "
 echo -e "\t\_| |_/\_|    \___/\_| \_\_|     \____/\_| \_\____/            \n"
 
+function systemfunc () {
+echo -e "$HOSTNAME\n"
+echo -e "$(uname -a)\n"
+echo -e "$(free -h)\n"
+echo -e "$(ip a)\n"
+echo -e "$(service --status-all)\n"
+echo -e "$(cat /proc/cpuinfo\n"
+echo -e "$(cat /etc/passwd)\n"
+echo -e "$(cat /etc/group)\n"
+echo -e "$(lspci)\n"
+}
+
+
 #menu, skip si argument
+        if [ -z "$1" ]; then
+                echo -e "Que voulez-vous faire ?"
+                echo -e "1:informations systeme\t2: ipfinfo API\t3:"
+                read clavier
+        fi
 
-if [ -z "$1" ]; then
-        echo -e "Que voulez-vous faire ?"
-        echo -e "1=test\n2=inprogress"
-        read clavier
-fi
+#informations systeme
+        if [ "$clavier" == "1" ] || [ "$1" == "1" ]; then
+                echo -e "$(systemfunc)"
+        fi
+#GET ipinfo API
+        if [ "$clavier" == "2" ] || [ "$1" == "2" ]; then
+                echo -e "Entrez une ip publique\n"
+                read ip
+                curl -X GET "https://ipinfo.io/$ip"
+        fi
 
-if [ "$clavier" == "1" ] || [ "$1" == "1" ]; then
-        echo "test condition reussi"
-else
-        echo "samarshpa"
-fi
