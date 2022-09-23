@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "entrez prenom + 0"
+read prenom
+
+for i in {0..9999}; do
+
+        unrar e -p"$prenom$i" rooted.rar
+
+        if [ "$?" = "0" ]; then
+                echo "dechiffrement OK"
+                echo "$prenom$i"
+                break
+        fi
+        echo "$prenom$i"
+done
