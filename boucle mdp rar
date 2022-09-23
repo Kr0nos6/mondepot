@@ -14,3 +14,9 @@ for i in {0..9999}; do
         fi
         echo "$prenom$i"
 done
+
+#avec des one line 
+
+#for etudiant in $(cat etudiants);do for i in $(seq 1 9999);do echo "$etudiant""0""$i"; done; done > dict
+#for line in $(tail -n $(( 149986 - 49996)) dict); do ( echo $line | rar e root.save ) &> /dev/null;if [ $? = 0 ]; then echo $line;fi; done
+#for line in $(tail -n $(cat dict); do ( echo $line | rar e root.save ) &> /dev/null;if [ $? = 0 ]; then echo $line;fi; done
