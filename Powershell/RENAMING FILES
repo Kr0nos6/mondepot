@@ -1,0 +1,8 @@
+#Retirer premier caractère
+get-childitem * | rename-item -newname { [string]($_.name).substring(1) }
+
+
+#Renomer avec incrémentation, ici les épidodes d'une serie pour jellyfin
+
+$nr = 1
+get-childitem | %{Rename-Item $_ -NewName ('S04E{0}.mkv' -f $nr++)}
